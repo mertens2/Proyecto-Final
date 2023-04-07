@@ -1,0 +1,2 @@
+C:\Users\Lenovo\Desktop\Diego\desarrollo videojuegos\c++\proyectofinalP1\proyectofinalP1\Debug\proyectofinalP1.exe
+C:\cygwin64\home\Lenovo\ProyectoFinal\proyectofinalP1\Debug\proyectofinalP1.exe
