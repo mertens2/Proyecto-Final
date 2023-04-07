@@ -14,12 +14,14 @@ class Vista {
 public:
 	Vista();
 	void ImprimirTexto(std::string texto);
+	void MensajeDeError();
 	void Salir();
 	int QueTipo();
 	bool QuePantalon();
 	bool QueCamisa();
 	int Calidad();
 	bool Cuello();
+	bool continuar = false;
 	int QueCantidad();
 	int DarPrecio();
 	~Vista();
