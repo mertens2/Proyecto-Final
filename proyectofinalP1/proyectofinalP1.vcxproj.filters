@@ -15,20 +15,20 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="historial.h">
-      <Filter>Archivos de origen</Filter>
-    </ClInclude>
     <ClInclude Include="tienda.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="prendas.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="vista.h">
-      <Filter>Archivos de origen</Filter>
+    <ClInclude Include="historial.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="presentador.h">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="vista.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
