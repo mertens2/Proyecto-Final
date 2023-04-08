@@ -1,4 +1,5 @@
 #include "vista.h"
+#include <limits>
 
 Vista::Vista()
 {
@@ -6,17 +7,13 @@ Vista::Vista()
 	bool tieneCuello, esChupinOMangaCorta;
 	presentador = new Presentador(this);
 	do {
-		system("CLS");
 		do {
+			system("CLS");
 			continuar = false;
-			try{
-				std::cout << "====== AUTOSERVICIO ======\n=== Tienda " << presentador->NombreTienda() << " || " << presentador->DireccionTienda() << " ===\n==========================\n===== Datos del Vendedor =====\n==========================\n=== " << presentador->NombreVendedor() << " == ID: 000" << presentador->IDVendedor() << " ==\n==========================\n";
-				std::cout << "Elija una opción :\n==========================\n1 - Comprar Prenda\n2 - Ver historial compras\n3 - Salir\n==========================\n\nEleccion: ";
-				std::cin >> opcion;
-			}
-			catch (...){
-				MensajeDeError()
-			}
+			std::cout << "====== AUTOSERVICIO ======\n=== Tienda " << presentador->NombreTienda() << " || " << presentador->DireccionTienda() << " ===\n==========================\n===== Datos del Vendedor =====\n==========================\n=== " << presentador->NombreVendedor() << " == ID: 000" << presentador->IDVendedor() << " ==\n==========================\n";
+			std::cout << "Elija una opción :\n==========================\n1 - Comprar Prenda\n2 - Ver historial compras\n3 - Salir\n==========================\n\nEleccion: ";
+			std::cin >> opcion;
+			MensajeDeError();
 		}while (continuar);
 		switch (opcion) {
 		case 1:
@@ -27,7 +24,9 @@ Vista::Vista()
 				tieneCuello = false;
 				if (calidad != 2) {
 					cantidad = QueCantidad();
-					precio = DarPrecio();
+					do {
+						precio = DarPrecio();
+					} while (continuar);
 					presentador->ComprarPrenda(tipoRopa, esChupinOMangaCorta, tieneCuello, cantidad, calidad, precio);
 				}
 			}
@@ -37,13 +36,15 @@ Vista::Vista()
 				calidad = Calidad();
 				if (calidad != 2) {
 					cantidad = QueCantidad();
-					precio = DarPrecio();
+					do {
+						precio = DarPrecio();
+					} while (continuar);
 					presentador->ComprarPrenda(tipoRopa, esChupinOMangaCorta, tieneCuello, cantidad, calidad, precio);
 				}
 			}
 			else {
 				std::cout << "Volviendo...";
-				system("wait");
+				system("pause");
 			}
 			break;
 		case 2:
@@ -52,17 +53,20 @@ Vista::Vista()
 		case 3:
 			Salir();
 			break;
+		default:
+			std::cout << "Error! Dato ingresado no valido.";
+			Salir();
+			break;
 		}
-		try {
-			std::cout << "\n==========================\n¿Quieres continuar?\n==========================\n \n1-Si\n2-No\n==========================\n\nRespuesta: ";
-			std::cin >> opcion;
-		}
-		catch (...){
+		std::cout << "\n==========================\n¿Quieres continuar?\n==========================\n \n1-Si\n2-No\n==========================\n\nRespuesta: ";
+		std::cin >> opcion;
+		if (!std::cin) {
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			std::cout << "¡Error!\n¡El dato ingresado no es un numero entero! Volviendo al inicio.\n";
-			system("wait");
+			system("pause");
 			opcion = 2;
 		}
-		
 	} while (opcion != 2);
 	system("CLS");
 	Salir();
@@ -71,16 +75,12 @@ Vista::Vista()
 int Vista::QueTipo() {
 	int tipoRopa;
 	continuar = false;
-	system("CLS");
 	do{
+		system("CLS");
 		continuar = false;
-		try {
-			std::cout << "\n\n=== ¿Desea comprar un pantalon o una camisa?\n==========================\n\n1-Pantalon\n2-Camisa\n3-Salir\n\n==========================\n\nEleccion: ";
-			std::cin >> tipoRopa;
-		}
-		catch (...){
-				MensajeDeError()
-		}
+		std::cout << "\n\n=== ¿Desea comprar un pantalon o una camisa?\n==========================\n\n1-Pantalon\n2-Camisa\n3-Salir\n\n==========================\n\nEleccion: ";
+		std::cin >> tipoRopa;
+		MensajeDeError();
 	}while (continuar);
 	if (tipoRopa != 1 && tipoRopa != 2) {
 		Salir();
@@ -90,17 +90,13 @@ int Vista::QueTipo() {
 
 bool Vista::QuePantalon() {
 	int tipoPantalon;
-	system("CLS");
 	do {
+		system("CLS");
 		continuar = false;
-		try {
-			ImprimirTexto("====== SECCION DE COMPRAS ======\n\n === Tienda " + presentador->NombreTienda() + " ==========================\n");
-			ImprimirTexto("=== ¿Desea comprar un pantalon chupin? ===\n=======================\n1-Si\n2-No\n=======================\nRespuesta: ");
-			std::cin >> tipoPantalon;
-		}
-		catch (...){
-				MensajeDeError()
-		}	
+		ImprimirTexto("====== SECCION DE COMPRAS ======\n\n === Tienda " + presentador->NombreTienda() + " ==========================\n");
+		ImprimirTexto("=== ¿Desea comprar un pantalon chupin? ===\n=======================\n1-Si\n2-No\n=======================\nRespuesta: ");
+		std::cin >> tipoPantalon;
+		MensajeDeError();
 	}while (continuar);
 	if (tipoPantalon == 1) {
 		return true;
@@ -110,34 +106,26 @@ bool Vista::QuePantalon() {
 
 int Vista::Calidad() {
 	int eleccion;
-	system("CLS");
 	do {
+		system("CLS");
 		continuar = false;
-		try {
-			ImprimirTexto("====== ELECCION DE CALIDAD ======\n\n === Tienda " + presentador->NombreTienda() + " ===\n==========================\n=== ");
-			ImprimirTexto("¿Desea calidad Premium (20% mas) o no? ===\n=======================\n1-No\n2-Si\n3-Volver\nRespuesta: ");
-			std::cin >> eleccion;
-		}
-		catch (...){
-				MensajeDeError()
-		}
+		ImprimirTexto("====== ELECCION DE CALIDAD ======\n\n === Tienda " + presentador->NombreTienda() + " ===\n==========================\n=== ");
+		ImprimirTexto("¿Desea calidad Premium (20% mas) o no? ===\n=======================\n1-No\n2-Si\n3-Volver\nRespuesta: ");
+		std::cin >> eleccion;
+		MensajeDeError();
 	}while (continuar);
 	return eleccion-1;
 }
 
 int Vista::QueCantidad() {
 	int cant;
-	system("CLS");
 	do {
+		system("CLS");
 		continuar = false;
-		try {
-			ImprimirTexto("====== ELECCION DE CANTIDAD ======\n\n === Tienda " + presentador->NombreTienda() + " ===\n==========================\n=== ");
-			ImprimirTexto("¿Cuantas unidades desea comprar? ===\n=======================\nRespuesta: ");
-			std::cin >> cant;
-		}
-		catch (...){
-				MensajeDeError()
-		}
+		ImprimirTexto("====== ELECCION DE CANTIDAD ======\n\n === Tienda " + presentador->NombreTienda() + " ===\n==========================\n=== ");
+		ImprimirTexto("¿Cuantas unidades desea comprar? ===\n=======================\nRespuesta: ");
+		std::cin >> cant;
+		MensajeDeError();
 	}while (continuar);
 	
 	return cant;
@@ -145,19 +133,13 @@ int Vista::QueCantidad() {
 
 bool Vista::Cuello() {
 	int cuello;
-	
-	system("CLS");
 	continuar = false;
 	do {
+		system("CLS");
 		continuar = false;
-		try {
-			ImprimirTexto("====== TIPO DE CUELLO ======\n\n === Tienda " + presentador->NombreTienda() + " ===\n==========================\n=== ");
-			ImprimirTexto("¿Desea comprar una camisa cuello mao? ===\n=======================\n1-Si\n2-No\n=======================\nRespuesta: ");
-			std::cin >> cuello;
-		}
-		catch (...){
-				MensajeDeError()
-		}
+		ImprimirTexto("====== TIPO DE CUELLO ======\n\n === Tienda " + presentador->NombreTienda() + " ===\n==========================\n=== ");
+		ImprimirTexto("¿Desea comprar una camisa cuello mao? ===\n=======================\n1-Si\n2-No\n=======================\nRespuesta: ");
+		std::cin >> cuello;
 	}while (continuar);
 	
 	if (cuello == 1) {
@@ -168,17 +150,13 @@ bool Vista::Cuello() {
 
 bool Vista::QueCamisa() {
 	int tipoCamisa;
-	system("CLS");
 	do {
+		system("CLS");
 		continuar = false;
-		try {
-			ImprimirTexto("====== SECCION DE COMPRAS ======\n\n === Tienda " + presentador->NombreTienda() + " ==========================\n");
-			ImprimirTexto("=== ¿Desea comprar una camisa manga corta? ===\n=======================\n1-Si\n2-No\n=======================\nRespuesta: ");
-			std::cin >> tipoCamisa;
-		}
-		catch (...){
-				MensajeDeError()
-		}
+		ImprimirTexto("====== SECCION DE COMPRAS ======\n\n === Tienda " + presentador->NombreTienda() + " ==========================\n");
+		ImprimirTexto("=== ¿Desea comprar una camisa manga corta? ===\n=======================\n1-Si\n2-No\n=======================\nRespuesta: ");
+		std::cin >> tipoCamisa;
+		MensajeDeError();
 	}while (continuar);
 	
 	if (tipoCamisa == 1) {
@@ -201,25 +179,23 @@ void Vista::ImprimirTexto(std::string texto)
 int Vista::DarPrecio() {
 	int precio;
 	system("CLS");
-	do{
-		continuar = false;
-		try {
-			ImprimirTexto("====== SELECCION DE PRECIO ======\n\n === Tienda " + presentador->NombreTienda() + " ==========================\n");
-			ImprimirTexto("=== Ingrese el precio del producto ===\n=======================\n=======================\n\nRespuesta: ");
-			std::cin >> precio;
-		}
-		catch (...){
-				MensajeDeError()
-		}
-	}while (continuar);
+	continuar = false;
+	ImprimirTexto("====== SELECCION DE PRECIO ======\n\n === Tienda " + presentador->NombreTienda() + " ==========================\n");
+	ImprimirTexto("=== Ingrese el precio del producto ===\n=======================\n=======================\n\nRespuesta: ");
+	std::cin >> precio;
+	MensajeDeError();
 	
 	return precio;
 }
 
 void Vista::MensajeDeError(){
-	std::cout << "¡Error!\n¡El dato ingresado no es un numero entero! Intentar nuevamente.\n";
-	system("wait");
-	continuar = true;
+	if (!std::cin) {
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cout << "¡Error!\n¡El dato ingresado no es un numero entero! Intentar nuevamente.\n";
+		system("pause");
+		continuar = true;
+	}
 }
 
 Vista::~Vista()
